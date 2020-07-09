@@ -21,5 +21,7 @@ namespace StudentSIMS.Models
         public int PhoneNumber { get; set; }
         [Timestamp]
         public DateTime TimeCreated { get; set; }
+
+        public List<Address> Addresses { get; set; }
     }
 }
