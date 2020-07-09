@@ -16,8 +16,9 @@ namespace StudentSIMS.Models
         [Required]
         public int StudentId { get; set; }
 
+        // StreetNumber in type string, to handle usages like '12A'
         [Required]
-        public int StreetNumber { get; set; }
+        public string StreetNumber { get; set; }
 
         [Required]
         public string Street { get; set; }
@@ -27,10 +28,12 @@ namespace StudentSIMS.Models
         [Required]
         public string City { get; set; }
 
-        [Required]
-        public int Postcode { get; set; }
+        // Postcode in type string, to handle leading zeros
+        [Required, RegularExpression("\\d{4, 10}")]
+        public string Postcode { get; set; }
 
-        [Required]
+        // Country being the ISO-3166 Alpha-2 country representation
+        [Required, StringLength(2)]
         public string Country { get; set; }
     }
 }
