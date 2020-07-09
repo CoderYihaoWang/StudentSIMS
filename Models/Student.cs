@@ -11,7 +11,7 @@ namespace StudentSIMS.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentID { get; set; }
+        public int StudentId { get; set; }
         [Required, MaxLength(100)]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
