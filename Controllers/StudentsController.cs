@@ -48,7 +48,7 @@ namespace StudentSIMS.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStudent(int id, Student student)
         {
-            if (id != student.StudentId)
+            if (id != student.StudentId || student.Addresses != null)
             {
                 return BadRequest();
             }
@@ -81,6 +81,12 @@ namespace StudentSIMS.Controllers
         public async Task<ActionResult<Student>> PostStudent(Student student)
         {
             _context.Student.Add(student);
+
+            foreach (var address in student.Addresses)
+            {
+                _context.Address.Add(address);
+            }
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudent", new { id = student.StudentId }, student);
