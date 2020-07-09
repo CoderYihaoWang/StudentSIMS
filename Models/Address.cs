@@ -16,8 +16,6 @@ namespace StudentSIMS.Models
         [Required]
         public int StudentId { get; set; }
 
-        public Student Student { get; set; }
-
         [Required]
         public int StreetNumber { get; set; }
 
