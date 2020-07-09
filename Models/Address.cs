@@ -7,6 +7,18 @@ namespace StudentSIMS.Models
 {
     public class Address
     {
-        
+        public int StudentId { get; set; }
+
+        public int StreetNumber { get; set; }
+
+        public string Street { get; set; }
+
+        public string Suberb { get; set; }
+
+        public string City { get; set; }
+
+        public int Postcode { get; set; }
+
+        public string Country { get; set; }
     }
 }
