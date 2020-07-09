@@ -42,6 +42,7 @@ namespace StudentSIMS.Controllers
             return address;
         }
 
+
         // PUT: api/Addresses/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -74,6 +75,37 @@ namespace StudentSIMS.Controllers
             return NoContent();
         }
 
+        // PUT: api/By-StudentId/5
+        [HttpPut("By-StudentId/{studentId}")]
+        public async Task<ActionResult<Address>> PutAddressByStudentId(int studentId, Address address)
+        {
+            if (studentId != address.StudentId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(address).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AddressExists(address.AddressId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+
         // POST: api/Addresses
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -83,6 +115,21 @@ namespace StudentSIMS.Controllers
             _context.Address.Add(address);
             await _context.SaveChangesAsync();
 
+            return CreatedAtAction("GetAddress", new { id = address.AddressId }, address);
+        }
+
+        // POST: api/Addresses/By-StudentId/5
+        [HttpPost("By-StudentId/{studentId}")]
+        public async Task<ActionResult<Address>> PostAddressByStudentId(int studentId, Address address)
+        {
+            if (!StudentExists(studentId) || address.StudentId != studentId)
+            {
+                return BadRequest();
+            }
+
+            _context.Address.Add(address);
+            await _context.SaveChangesAsync();
+            
             return CreatedAtAction("GetAddress", new { id = address.AddressId }, address);
         }
 
@@ -105,6 +152,11 @@ namespace StudentSIMS.Controllers
         private bool AddressExists(int id)
         {
             return _context.Address.Any(e => e.AddressId == id);
+        }
+
+        private bool StudentExists(int id)
+        {
+            return _context.Student.Any(e => e.StudentId == id);
         }
     }
 }
